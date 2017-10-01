@@ -178,7 +178,7 @@ const addHighlights = () => {
  * and the word contained in that region.
  */
 const textSplitSpans = (text) => {
-  const NWC = ' ,./?<>[]{};:"!@#$%^&*()-+=';
+  const NWC = ' ,./?<>[]{};:"!@#%^&*()-+=';
   const spans = [];
   let buf = [];
   let on = false;
