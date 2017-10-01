@@ -1,0 +1,21 @@
+{
+  "manifest_version": 2,
+  "icons": { "128": "images/icon.png" },
+  "browser_action": {
+    "default_icon": "images/icon.png"
+  },
+  "content_scripts": [{
+    "matches": [
+      "https://scholar.google.com/scholar_case?*",
+      "https://scholar.google.com.co/scholar_case?*"
+    ],
+    "js": [ "js/content.js" ],
+    "run_at": "document_end"
+  }],
+  "permissions": [ "<all_urls>" ],
+  "web_accessible_resources": [ "js/*", "images/*" ],
+  "content_security_policy": "script-src 'self'; object-src 'self'",
+  "name": "<%= package.name %>",
+  "version": "<%= package.version %>",
+  "description": "<%= package.description %>"
+}

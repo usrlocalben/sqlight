@@ -1,0 +1,10 @@
+.DS_Store
+mykey.pem
+node_modules
+npm-debug.log
+dist/*.crx
+dist/dev
+dist/prod
+dist/updates.xml
+.tmp
+*.swp
