@@ -1,0 +1,11 @@
+Version 1.1.0
+2017-10-01
+- fix failure to parse queries with trailing whitespace
+- don't highlight lonley stop-words
+- don't modify the font-style when highlighting
+- allow dollar-sign ($) to match terms
+
+Version 1.0.0
+2017-10-01
+- Initial Release
+
