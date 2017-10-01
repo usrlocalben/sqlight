@@ -121,9 +121,9 @@ const addHighlights = () => {
 
   const highlightRange = (range, bgColorCode) => {
     // create wrapping i
-    var iNode = document.createElement('i');
-    var selectorName = iNode.className = 'chrome-extension-sqlight-'.concat(bgColorCode);
-    iNode.classList.add('chrome-extension-sqlight');
+    var spanNode = document.createElement('span');
+    var selectorName = spanNode.className = 'chrome-extension-sqlight-'.concat(bgColorCode);
+    spanNode.classList.add('chrome-extension-sqlight');
 
     // add highlight class style in CSS
     if (!ruleExistenceDict[bgColorCode]) {
@@ -131,9 +131,9 @@ const addHighlights = () => {
       ruleExistenceDict[bgColorCode] = true;
     }
 
-    // range.surroundContents(iNode) will throw exception if word across multi tag
-    iNode.appendChild(range.extractContents());
-    range.insertNode(iNode);
+    // range.surroundContents() will throw exception if word across multi tag
+    spanNode.appendChild(range.extractContents());
+    range.insertNode(spanNode);
   };
 
   const urlParams = new URLSearchParams(location.search);
