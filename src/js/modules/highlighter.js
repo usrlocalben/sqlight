@@ -7,6 +7,9 @@
 import _ from 'lodash';
 import queryParser from './query-grammar.pegjs';
 
+const stopWords = 'a an are as at be by for how in is it of on or that the to was what when where who with the'.split(' ');
+
+// query expression tree node types
 const NT_OR = 'OR';
 const NT_AND = 'AND';
 const NT_TEXT = 'TEXT';
@@ -55,6 +58,9 @@ const evalQuery = (exprNode, wordSpans, wi) => {
       return textWord.toLowerCase() === termWord.toLowerCase();
     };
     const numTerms = exprNode.terms.length;
+    if (numTerms === 1 && _.includes(stopWords, exprNode.terms[0].toLowerCase())) {
+      return 0;  // don't highlight a lonely stopword
+    }
     const pairs = _.zip(wordSpans.slice(wi, wi + numTerms), exprNode.terms);
     const match = _.every(pairs, ([ textWord, termWord ]) => compareTerm(textWord.word, termWord));
     return match ? numTerms : 0;
