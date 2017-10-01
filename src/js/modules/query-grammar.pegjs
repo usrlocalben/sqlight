@@ -1,5 +1,5 @@
 Expr
-  = child:LogicalOr { return child; }
+  = child:LogicalOr _ { return child; }
  
 LogicalOr
   = child:(OrExpr / LogicalAnd) { return child; }
