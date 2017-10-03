@@ -214,4 +214,9 @@ const textSplitSpans = (text) => {
   return spans;
 };
 
-export default addHighlights;
+export default {
+  addHighlights,
+  evalQuery,
+  findMatchingSpans,
+  textSplitSpans,
+};

@@ -1,5 +1,5 @@
 Expr
-  = child:LogicalOr _ { return child; }
+  = child:LogicalOr NWC  { return child; }
  
 LogicalOr
   = child:(OrExpr / LogicalAnd) { return child; }
@@ -27,7 +27,8 @@ Term
   if (child.type !== undefined) {
     return child;
   } else {
-    return { type: 'TEXT', terms: [child] };
+    const maybeHyphenSeq = child.split('-');
+    return { type: 'TEXT', terms: maybeHyphenSeq };
   }
   }
 
@@ -41,13 +42,16 @@ PhraseWords
   = Word+
 
 Word
-  = _ String { return text().trim(); }
+  = _ [\.\$\,]* word:String [\.\$\,]* { return word; }
 
 String
-  = !OpAND !OpOR Char+
+  = !OpAND !OpOR chars:Char+ { return chars.join(''); }
 
 Char
   = [\-A-Za-z0-9_\*]
+
+NWC
+  = [ \t\n\r\.\$\,]*
   
 OpenParen
   = _ "("

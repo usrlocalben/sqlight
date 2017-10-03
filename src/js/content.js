@@ -1,2 +1,2 @@
-import addHighlights from './modules/highlighter.js';
-window.addEventListener('load', addHighlights);
+import highlighter from './modules/highlighter.js';
+window.addEventListener('load', highlighter.addHighlights);

@@ -1,3 +1,8 @@
+Version 1.2.0
+2017-10-03
+- add hyphenated-word sequence parsing
+- fix syntax errors for queries that have non-word-chars
+
 Version 1.1.0
 2017-10-01
 - fix failure to parse queries with trailing whitespace
@@ -8,4 +13,3 @@ Version 1.1.0
 Version 1.0.0
 2017-10-01
 - Initial Release
-
