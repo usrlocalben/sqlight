@@ -1,5 +1,6 @@
 import assert from 'assert';
 import highlighter from './highlighter.js';
+import queryParser from './query-grammar.pegjs';
 
 describe('textSplitSpans', () => {
   it('should split a basic three word string', () => {
@@ -29,6 +30,17 @@ describe('textSplitSpans', () => {
     const expected = [
       { from: 0, until: 3, word: 'baz' },
     ];
+    assert.deepEqual(out, expected);
+  });
+});
+
+
+describe('findMatchingSpans', () => {
+  it('correctly matches an expr if it\'s at the end of a string', () => {
+    const qExpr = queryParser.parse('"foo bar" "baz"');
+    const text = 'This string ends with foo bar.'
+    const out = highlighter.findMatchingSpans(text, qExpr);
+    const expected = [ { from: 22, until: 29 } ];
     assert.deepEqual(out, expected);
   });
 });

@@ -58,12 +58,19 @@ const evalQuery = (exprNode, wordSpans, wi) => {
       return textWord.toLowerCase() === termWord.toLowerCase();
     };
     const numTerms = exprNode.terms.length;
+    const clip = wordSpans.slice(wi, wi + numTerms);
+    if (clip.length < numTerms) {
+      return 0;
+    }
+    const pairs = _.zip(clip, exprNode.terms);
+    const match = _.every(pairs, ([ textWord, termWord ]) => compareTerm(textWord.word, termWord));
+    if (!match) {
+      return 0;
+    }
     if (numTerms === 1 && _.includes(stopWords, exprNode.terms[0].toLowerCase())) {
       return 0;  // don't highlight a lonely stopword
     }
-    const pairs = _.zip(wordSpans.slice(wi, wi + numTerms), exprNode.terms);
-    const match = _.every(pairs, ([ textWord, termWord ]) => compareTerm(textWord.word, termWord));
-    return match ? numTerms : 0;
+    return numTerms;
   } else {
     throw new Error(`unknown node type "${exprNode.type}"`);
   }
@@ -83,7 +90,7 @@ const findMatchingSpans = (text, qExpr) => {
   let glowing = false;
   let segment = [];
   let activeStack = [];
-  for (let wi = 0; wi < wordSpans.length; wi += 1) {
+  _.forEach(wordSpans, (wordSpan, wi) => {
     // decrement hit length counters
     activeStack = _.chain(activeStack).map(x => x - 1).filter().value();
 
@@ -103,8 +110,8 @@ const findMatchingSpans = (text, qExpr) => {
       glowing = true;
       activeStack.push(hitLengthInWords);  // start a new match counter
     }
-    segment.push(wordSpans[wi]);
-  }
+    segment.push(wordSpan);
+  });
   if (glowing) {
     // push the last segment if it was a match
     spans.push({ from: _.first(segment).from, until: _.last(segment).until });

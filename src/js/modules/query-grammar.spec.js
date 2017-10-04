@@ -94,7 +94,7 @@ describe('the query parser', () => {
     assert.deepEqual(out, expected);
   });
 
-  it('should handle pasted blobs no one would write', () => {
+  it('should parse pasted blobs no one would write', () => {
     const out = queryParser.parse('  Jackson v. Star Sprinkler Corp., 575 F.2d 1223 (8th Cir. 1978).');
     const expected = {
       type: 'AND',
@@ -114,6 +114,24 @@ describe('the query parser', () => {
           { type: 'TEXT', terms: ['1978'] },
         ] },
       ],
+    };
+    assert.deepEqual(out, expected);
+  });
+
+  it('should parse single word in quotes', () => {
+    const out = queryParser.parse('"unfair"');
+    const expected = { type: 'TEXT', terms: [ 'unfair' ] };
+    assert.deepEqual(out, expected);
+  });
+
+  it('should parse single word in quotes', () => {
+    const out = queryParser.parse('"foo bar" "baz"');
+    const expected = { 
+      type: 'AND',
+      exprs: [
+        { type: 'TEXT', terms: [ 'foo', 'bar' ] },
+        { type: 'TEXT', terms: [ 'baz' ] },
+      ]
     };
     assert.deepEqual(out, expected);
   });

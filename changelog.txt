@@ -2,6 +2,7 @@ Version 1.2.0
 2017-10-03
 - add hyphenated-word sequence parsing
 - fix syntax errors for queries that have non-word-chars
+- fix evaluating terms that border the end of a string
 
 Version 1.1.0
 2017-10-01
