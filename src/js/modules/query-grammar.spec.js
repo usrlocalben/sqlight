@@ -118,13 +118,13 @@ describe('the query parser', () => {
     assert.deepEqual(out, expected);
   });
 
-  it('should parse single word in quotes', () => {
+  it('should parse single word in quotes i', () => {
     const out = queryParser.parse('"unfair"');
     const expected = { type: 'TEXT', terms: [ 'unfair' ] };
     assert.deepEqual(out, expected);
   });
 
-  it('should parse single word in quotes', () => {
+  it('should parse single word in quotes ii', () => {
     const out = queryParser.parse('"foo bar" "baz"');
     const expected = { 
       type: 'AND',
@@ -133,6 +133,12 @@ describe('the query parser', () => {
         { type: 'TEXT', terms: [ 'baz' ] },
       ]
     };
+    assert.deepEqual(out, expected);
+  });
+
+  it('should parse wildcards', () => {
+    const out = queryParser.parse('foo**bar');
+    const expected = { type: 'TEXT', terms: ['foo', '*', '*', 'bar'] };
     assert.deepEqual(out, expected);
   });
 

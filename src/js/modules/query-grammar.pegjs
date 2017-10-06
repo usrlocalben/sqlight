@@ -27,8 +27,21 @@ Term
   if (child.type !== undefined) {
     return child;
   } else {
-    const maybeHyphenSeq = child.split('-');
-    return { type: 'TEXT', terms: maybeHyphenSeq };
+    if (child.indexOf('*') > -1) {
+      var words = child.split('*');
+      var out = [];
+      words.forEach(function (word) {
+        if (word.length) {
+          out.push(word);
+        }
+        out.push('*');
+      });
+      out = out.slice(0, out.length - 1);
+      return { type: 'TEXT', terms: out };
+    } else {
+      const maybeHyphenSeq = child.split('-');
+      return { type: 'TEXT', terms: maybeHyphenSeq };
+    }
   }
   }
 

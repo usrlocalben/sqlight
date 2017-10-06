@@ -43,4 +43,13 @@ describe('findMatchingSpans', () => {
     const expected = [ { from: 22, until: 29 } ];
     assert.deepEqual(out, expected);
   });
+
+  it('correctly matches an expr with wildcards', () => {
+    const qExpr = queryParser.parse('string**foo');
+    //            0123456789012345678901234567
+    const text = 'This string ends with foo bar.'
+    const out = highlighter.findMatchingSpans(text, qExpr);
+    const expected = [ { from: 5, until: 25 } ];
+    assert.deepEqual(out, expected);
+  });
 });
